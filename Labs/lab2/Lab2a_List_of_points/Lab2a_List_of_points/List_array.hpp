@@ -9,6 +9,7 @@
 #ifndef List_array_hpp
 #define List_array_hpp
 #include <iostream>
+#include "Point.hpp"
 #include <algorithm> //swap
 
 template <typename T, size_t N>
@@ -25,10 +26,10 @@ public:
     int length(); //+
     bool empty(); //+
     void append(T); //+
-    void insert(T, int); //+
+    void insert(int, T); //+
     void remove(int); //+
     T get(int); //+
-    void set(T, int); //+
+    void set(int, T); //+
     void print(); //+
     void print_with_address(); //+
     
@@ -45,7 +46,10 @@ public:
 template <typename T, size_t N>
 List_array<T, N>::List_array() : len(0) {
     for (int i = 0; i < size(); ++i) {
-        array[i] = 0;
+        array[i].x = 0;
+        array[i].y = 0;
+        array[i].z = 0;
+        
     }
     first = last = &array[0];
 };
@@ -80,7 +84,7 @@ void List_array<T, N>::append(T dat) {
 }
 
 template <typename T, size_t N>
-void List_array<T, N>::insert(T dat, int indx) {
+void List_array<T, N>::insert(int indx, T dat) {
     if (indx >= len) { std::cout << "Error. Can't be inserted by this index." << std::endl; return; }
     else {
     T* temp = last;
@@ -99,7 +103,9 @@ template <typename T, size_t N>
 void List_array<T, N>::remove(int indx) {
     if (indx >= len) { std::cout << "Error. Can't be removed by this index." << std::endl; return; }
     else {
-    array[indx] = 0;
+    array[indx].x = 0;
+    array[indx].y = 0;
+    array[indx].z = 0;
     T* temp = &array[indx];
     for(int i = 0; i < len - 1 - indx; ++i) {
         std::swap(*temp, *(temp+1));
@@ -111,12 +117,12 @@ void List_array<T, N>::remove(int indx) {
 
 template <typename T, size_t N>
 T List_array<T, N>::get(int indx) {
-    if (indx >= len) { std::cout << "Error in get() function. Wrong index." << std::endl; return; }
-    else { return array[indx]; }
+    if (indx >= len) { std::cout << "Error in get function. Wrong index." << std::endl; exit(0); }
+    return array[indx];
 }
 
 template <typename T, size_t N>
-void List_array<T, N>::set(T dat, int indx) {
+void List_array<T, N>::set(int indx, T dat) {
     if (indx >= len) { std::cout << "Error in set function. Wrong index." << std::endl; return; }
     else { array[indx] = dat; }
 }
@@ -124,14 +130,14 @@ void List_array<T, N>::set(T dat, int indx) {
 template <typename T, size_t N>
 void List_array<T, N>::print() {
     for (int i = 0; i < len; ++i) {
-        std::cout << array[i] << ' ';// << &arr[i] << std::endl;
+        std::cout << array[i].toString() << ' ';
     }
 }
 
 template <typename T, size_t N>
 void List_array<T, N>::print_with_address() {
     for (int i = 0; i < len; ++i) {
-        std::cout << array[i] << ' ' << &array[i] << std::endl;
+        std::cout << array[i].toString() << ' ' << &array[i] << std::endl;
     }
 }
 

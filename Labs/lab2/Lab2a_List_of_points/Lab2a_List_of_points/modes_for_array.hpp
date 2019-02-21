@@ -1,28 +1,26 @@
 //
-//  modes.hpp
+//  modes_for_array.hpp
 //  Lab2a_List_of_points
 //
-//  Created by Marina Polishchuk on 2/14/19.
+//  Created by Marina Polishchuk on 2/18/19.
 //  Copyright © 2019 Marina Polishchuk. All rights reserved.
 //
 
-#ifndef modes_hpp
-#define modes_hpp
+#ifndef modes_for_array_hpp
+#define modes_for_array_hpp
 
-#include "List.hpp"
+#include "List_array.hpp"
 
-//реализован интерактивный режим и демонстрационный режим для СПИСКОВ
-
-void demo_mode(List<Point> p) {
+void demo_mode(List_array<Point, 100> p) {
     
     std::cout << "\nWelcome to a demo mode." << std::endl;
-    std::cout << "The size of the list is 5." << std::endl;
+    std::cout << "The max size of the list is 100." << std::endl;
     int size = 5;
     for (double i = 0; i < size; ++i) {
         Point temp{i, i, i};
         p.append(temp);
     }
-    std::cout << "The list: " << std::endl;
+    std::cout << "The list of 5: " << std::endl;
     p.print();
     std::cout << "\nThe list with addresses: " << std::endl;
     p.print_with_address();
@@ -36,7 +34,7 @@ void demo_mode(List<Point> p) {
     
     std::cout << "\nget() method demonstration.";
     int indx_get = 3;
-    std::cout << "\nget(" << indx_get << "): " << (p.get(indx_get)).toString() << std::endl;
+    std::cout << "\nget(" << indx_get << "): " << p.get(indx_get).toString() << std::endl;
     
     std::cout << "\ninsert() method demonstration.";
     int indx_insert = 2;
@@ -46,7 +44,7 @@ void demo_mode(List<Point> p) {
     p.print();
     
     std::cout << "\nremove() method demonstration.";
-    int indx_remove = 5;
+    int indx_remove = 4;
     std::cout << "\nremove(" << indx_remove << "):" << std::endl;
     p.remove(indx_remove);
     p.print();
@@ -55,7 +53,7 @@ void demo_mode(List<Point> p) {
 }
 
 
-void interactive_mode(List<Point> p) {
+void interactive_mode(List_array<Point, 100> p) {
     
     std::cout << "\nWelcome to an interactive mode." << std::endl;
     std::cout << "Press 'a' to fill the list automatically or press 'b' to fill the list by yourself." << std::endl;
@@ -122,7 +120,7 @@ void interactive_mode(List<Point> p) {
     p.set(indx_set, data_set);
     p.print();
     
-    std::cout << "\nget() method demonstration.\nEnter index:" << std::endl;
+    std::cout << "\n\nget() method demonstration.\nEnter index:" << std::endl;
     int indx_get;
     std::cin >> indx_get;
     std::cout << "\nget(): " << p.get(indx_get).toString() << std::endl;
@@ -136,7 +134,7 @@ void interactive_mode(List<Point> p) {
     p.insert(indx_insert, data_insert);
     p.print();
     
-    std::cout << "\nremove() method demonstration.\nEnter index:" << std::endl;
+    std::cout << "\n\nremove() method demonstration.\nEnter index:" << std::endl;
     int indx_remove;
     std::cin >> indx_remove;
     std::cout << "\nremove():" << std::endl;
@@ -145,4 +143,4 @@ void interactive_mode(List<Point> p) {
     std::cout << std::endl;
     return;
 }
-#endif /* modes_hpp */
+#endif /* modes_for_array_hpp */
