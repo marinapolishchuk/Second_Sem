@@ -22,7 +22,7 @@ private:
     void resize(size_t); //+
 public:
     Vector(); //+
-    ~Vector(); //+
+    ~Vector() = default; //+
     static Vector create_empty(); //+
     bool empty(); //+
     void append(T); //+
@@ -39,11 +39,6 @@ public:
 template <typename T>
 Vector<T>::Vector() : len(0), cap(1) {
     array = new T[cap];
-}
-
-template <typename T>
-Vector<T>::~Vector() {
-    delete [] array;
 }
 
 template <typename T>
@@ -92,7 +87,10 @@ void Vector<T>::remove(int indx) {
         std::swap(array[indx], array[indx + 1]);
         indx++;
     }
-    array[indx] = 0;
+    array[indx].x = 0;
+    array[indx].y = 0;
+    array[indx].z = 0;
+
 }
 
 template <typename T>
@@ -118,14 +116,14 @@ size_t Vector<T>::capacity() {
 template <typename T>
 void Vector<T>::print() {
     for (int i = 0; i < len; ++i) {
-        std::cout << array[i] << ' ';
+        std::cout << array[i].toString() << ' ';
     }
 }
 
 template <typename T>
 void Vector<T>::print_with_address() {
     for (int i = 0; i < len; ++i) {
-        std::cout << "Data: " << array[i] << ", Address: " << &array[i] <<std::endl;
+        std::cout << "Data: " << array[i].toString() << ", Address: " << &array[i] << std::endl;
     }
 }
 

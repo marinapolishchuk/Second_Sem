@@ -22,6 +22,7 @@
 #include "List.hpp"
 #include "modes_for_linked_list.hpp"
 #include "modes_for_array.hpp"
+#include "modes_for_dynamic_arr.hpp"
 #include "List_array.hpp"
 #include "List_dynamic_arr.hpp"
 
@@ -29,23 +30,10 @@ int main() {
     
     List<Point> linked_list = List<Point>::create_empty(); //связный список
     List_array<Point, 100> arr = List_array<Point, 100>::create_empty(); //статический массив
-    Vector<int> a;
-    a.append(1);
-    a.append(2);
-    a.append(3);
-    a.append(4);
-    a.append(5);
-    a.insert(1, 333);
-    a.print_with_address();
-    std::cout << std::endl;
-    a.remove(1);
-    std::cout << std::endl;
-    a.print_with_address();
-    std::cout << a.length() << std::endl;
+    Vector<Point> vec = Vector<Point>::create_empty();
 
-    /*...*/ //динамический массив
     
-    /*std::cout << "Select mode.\nEnter '1' to choose an interactive mode.\nEnter '2' to choose a demo mode." << std::endl;
+    std::cout << "Select mode.\nEnter '1' to choose an interactive mode.\nEnter '2' to choose a demo mode." << std::endl;
     int mode = 0;
     std::cin >> mode;
     
@@ -62,7 +50,7 @@ int main() {
                     interactive_mode(arr);
                     break;
                 case 'b':
-                    //...//
+                    interactive_mode(vec);
                     break;
                 case 'c':
                     interactive_mode(linked_list);
@@ -86,7 +74,7 @@ int main() {
                     demo_mode(arr);
                     break;
                 case 'b':
-                    //...//
+                    demo_mode(vec);
                     break;
                 case 'c':
                     demo_mode(linked_list);
@@ -111,6 +99,6 @@ int main() {
             break;
         }
     } 
-    */
+    
     return 0;
 }
