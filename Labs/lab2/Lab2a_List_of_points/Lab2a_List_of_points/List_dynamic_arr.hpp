@@ -70,6 +70,7 @@ void Vector<T>::append(T dat) {
 
 template <typename T>
 void Vector<T>::insert(int indx, T dat) {
+    if (indx >= len) { std::cout << "Error. Can't be inserted by this index." << std::endl; return; }
     len++;
     if (len == cap) { resize(cap * 2); }
     size_t temp = len - 1;
@@ -82,6 +83,7 @@ void Vector<T>::insert(int indx, T dat) {
 
 template <typename T>
 void Vector<T>::remove(int indx) {
+    if (indx >= len) { std::cout << "Error. Can't be removed by this index." << std::endl; return; }
     len--;
     for (int i = 0; i < len - 1; ++i) {
         std::swap(array[indx], array[indx + 1]);
@@ -95,11 +97,13 @@ void Vector<T>::remove(int indx) {
 
 template <typename T>
 T Vector<T>::get(int indx) {
+    if (indx >= len) { std::cout << "Error in get function. Wrong index." << std::endl; exit(0); }
     return array[indx];
 }
 
 template <typename T>
 void Vector<T>::set(int indx, T dat) {
+    if (indx >= len) { std::cout << "Error in set function. Wrong index." << std::endl; return; }
     array[indx] = dat;
 }
 
