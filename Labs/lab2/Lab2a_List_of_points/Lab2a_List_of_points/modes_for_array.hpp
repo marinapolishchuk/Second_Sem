@@ -11,10 +11,10 @@
 
 #include "List_array.hpp"
 
-void demo_mode(List_array<Point, 100> p) {
+void demo_mode(List_array<Point, 1000> p) {
     
     std::cout << "\nWelcome to a demo mode." << std::endl;
-    std::cout << "The max size of the list is 100." << std::endl;
+    std::cout << "The max size of the list is 1000." << std::endl;
     int size = 5;
     for (double i = 0; i < size; ++i) {
         Point temp{i, i, i};
@@ -53,7 +53,7 @@ void demo_mode(List_array<Point, 100> p) {
 }
 
 
-void interactive_mode(List_array<Point, 100> p) {
+void interactive_mode(List_array<Point, 1000> p) {
     
     std::cout << "\nWelcome to an interactive mode." << std::endl;
     std::cout << "Press 'a' to fill the list automatically or press 'b' to fill the list by yourself." << std::endl;

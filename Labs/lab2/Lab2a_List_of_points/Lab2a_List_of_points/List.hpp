@@ -93,6 +93,7 @@ void List<T>::insert(int indx, T dat) {
         else if(count == indx - 1) {
             inserted_el = new Node{dat, head->next};
             head->next = inserted_el;
+            len++;
             return;
         }
         head = head->next;
@@ -116,6 +117,7 @@ void List<T>::remove(int indx) {
         head = head->next;
         count++;
     }
+    len--;
 }
 
 template <typename T>

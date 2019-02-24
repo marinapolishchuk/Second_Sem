@@ -32,7 +32,7 @@ void demo_mode(Vector<Point> p) {
     p.set(indx_set, data_set);
     p.print();
     
-    std::cout << "\nget() method demonstration.";
+    std::cout << "\n\nget() method demonstration.";
     int indx_get = 3;
     std::cout << "\nget(" << indx_get << "): " << p.get(indx_get).toString() << std::endl;
     
@@ -43,7 +43,7 @@ void demo_mode(Vector<Point> p) {
     p.insert(indx_insert, data_insert);
     p.print();
     
-    std::cout << "\nremove() method demonstration.";
+    std::cout << "\n\nremove() method demonstration.";
     int indx_remove = 4;
     std::cout << "\nremove(" << indx_remove << "):" << std::endl;
     p.remove(indx_remove);

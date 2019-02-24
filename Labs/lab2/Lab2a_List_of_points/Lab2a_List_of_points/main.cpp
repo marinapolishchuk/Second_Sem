@@ -8,13 +8,13 @@
 
 /* РЕАЛИЗОВАТЬ СТРУКТУРУ ДАННЫХ "СПИСОК. ТОЧКА В ТРЕХМЕРНОМ ПРОСТРАНЕСТВЕ" ТРЕМЯ РАЗНЫМИ СПОСОБАМИ:
     1. НА ОСНОВЕ МАССИВА ФИКСИРОВАНОГО РАЗМЕРА. ПРИ ВЫХОДЕ ЗА ГРАНИЦЫ МАССИВА ВЫВОДИТЬ СООБЩЕНИЕ ОБ ОШИБКЕ. +++
-    2. НА ОСНОВЕ ДИНАМИЧЕСКОГО МАССИВА (НАПРИМЕР std::vector).
+    2. НА ОСНОВЕ ДИНАМИЧЕСКОГО МАССИВА (НАПРИМЕР std::vector). +++
     3. НА ОСНОВЕ СВЯЗНОГО СПИСКА +++
 */
 
 /* РЕАЛИЗОВАТЬ ТРИ РЕЖИМА РАБОТЫ:
-    1. ИНТЕРАКТИВНЫЙ ДИАЛОГОВЫЙ РЕЖИМ (список) (массив) ()
-    2. ДЕМОНСТРАЦИОННЫЙ РЕЖИМ (список) (массив) ()
+    1. ИНТЕРАКТИВНЫЙ ДИАЛОГОВЫЙ РЕЖИМ (список) (массив) (вектор)
+    2. ДЕМОНСТРАЦИОННЫЙ РЕЖИМ (список) (массив) (вектор)
     3. АВТОМАТИЧЕСКИЙ РЕЖИМ "BENCHMARK" (в отдельном файле для всех способов одновременно)
 */
 
@@ -25,15 +25,16 @@
 #include "modes_for_dynamic_arr.hpp"
 #include "List_array.hpp"
 #include "List_dynamic_arr.hpp"
+#include "benchmark.hpp"
 
 int main() {
     
     List<Point> linked_list = List<Point>::create_empty(); //связный список
-    List_array<Point, 100> arr = List_array<Point, 100>::create_empty(); //статический массив
+    List_array<Point, 1000> arr = List_array<Point, 1000>::create_empty(); //статический массив
     Vector<Point> vec = Vector<Point>::create_empty();
-
+   
     
-    std::cout << "Select mode.\nEnter '1' to choose an interactive mode.\nEnter '2' to choose a demo mode." << std::endl;
+    std::cout << "Select mode.\nEnter '1' to choose an interactive mode.\nEnter '2' to choose a demo mode.\nEnter '3' to choose a benchmark mode." << std::endl;
     int mode = 0;
     std::cin >> mode;
     
@@ -89,7 +90,10 @@ int main() {
         
         //Режим benchmark. Сценарий для всех раелизаций вместе.
         case 3:
-        {  break; }
+        {
+            benchmark_mode();
+            break;
+        }
             
             
         //Опция, если режим был выбран неправильно 
