@@ -1,0 +1,67 @@
+list realization in three different ways: linked list, static array and dynamic array (vector).
+There are basic methods for each realization:
+	append()
+	insert()
+	get()
+	set()
+	remove()
+
+TIME MEASUREMENT FOR LINKED LIST:
+Number of operations = 1: 
+	append(): 8
+	insert(): 67
+	get(): 3
+	set(): 3
+	remove(): 3
+Number of operations = 10: 
+	append(): 2
+	insert(): 0.8
+	get(): 0.6
+	set(): 0.3
+	remove(): 0.7
+Number of operations = 100: 
+	append(): 2
+	insert(): 5.7
+	get(): 4.4
+	set(): 4.5
+	remove(): 5.7
+
+TIME MEASUREMENT FOR STATIC ARRAY:
+Number of operations = 1: 
+	append(): 42
+	insert(): 2
+	get(): 2
+	set(): 2
+	remove(): 1
+Number of operations = 10: 
+	append(): 0.4
+	insert(): 0.7
+	get(): 0.3
+	set(): 0.4
+	remove(): 0.7
+Number of operations = 100: 
+	append(): 0.06
+	insert(): 2.07
+	get(): 0.04
+	set(): 0.05
+	remove(): 1.76
+
+TIME MEASUREMENT FOR DYNAMIC ARRAY:
+Number of operations = 1: 
+	append(): 68
+	insert(): 4
+	get(): 2
+	set(): 2
+	remove(): 3
+Number of operations = 10: 
+	append(): 0.5
+	insert(): 0.6
+	get(): 0.3
+	set(): 0.3
+	remove(): 0.7
+Number of operations = 100: 
+	append(): 0.18
+	insert(): 2.82
+	get(): 0.04
+	set(): 0.06
+	remove(): 3.57
