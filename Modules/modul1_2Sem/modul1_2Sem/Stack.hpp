@@ -22,6 +22,8 @@ public:
     void add(Parallelepiped);
     Parallelepiped top();
     void pop();
+    int size();
+    bool empty();
     
 };
 
@@ -48,5 +50,9 @@ Parallelepiped Stack::top() {return arr[len - 1];}
 void Stack::pop() {
     --len;
 }
+
+int Stack::size() {return len;}
+
+bool Stack::empty() {return len == 0;}
 
 #endif /* Stack_hp */

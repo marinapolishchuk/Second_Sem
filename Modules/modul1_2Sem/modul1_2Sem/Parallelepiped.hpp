@@ -14,6 +14,7 @@
 #include <cstdlib> // rand()
 // координаты вершин по модулю <= 100
 // value = floor(volume + (4*v + 5)*surface)
+
 class Parallelepiped {
 private:
     struct Point { double x; double y; double z; };
@@ -28,7 +29,7 @@ private:
     Vector a2;
     Vector a3;
     int v; // номер варианта
-    double value; // величина //+
+    int value; // величина //+
     double volume; // объем //+
     double surface; // площадь //+
     
@@ -50,7 +51,7 @@ private:
     void Calculate_Value() {
         Calculate_Surface();
         Calculate_Volume();
-        value = floor(volume + (4*v + 5) * surface);
+        value = static_cast<int>(floor(volume + (4*v + 5) * surface));
     }
     
 public:
@@ -92,7 +93,7 @@ public:
         return surface;
     }
     
-    double Get_Value() {
+    int Get_Value() {
         Calculate_Value();
         return value;
     }
@@ -110,8 +111,9 @@ public:
     
     std::string toString() {
         Calculate_Value();
-        std::string s = "{(" + std::to_string(static_cast<int>(a1.vec_x)) + ", " + std::to_string(static_cast<int>(a1.vec_y)) + ", " + std::to_string(static_cast<int>(a1.vec_z)) + "), " + "(" + std::to_string(static_cast<int>(a2.vec_x)) + ", " + std::to_string(static_cast<int>(a2.vec_y)) + ", " + std::to_string(static_cast<int>(a2.vec_z)) + "), " + "(" + std::to_string(static_cast<int>(a3.vec_x)) + ", " + std::to_string(static_cast<int>(a3.vec_y)) + ", " + std::to_string(static_cast<int>(a3.vec_z)) + "), " + std::to_string(static_cast<int>(value)) + "}";
+        std::string s = "{vectors: (" + std::to_string(static_cast<int>(a1.vec_x)) + ", " + std::to_string(static_cast<int>(a1.vec_y)) + ", " + std::to_string(static_cast<int>(a1.vec_z)) + "), " + "(" + std::to_string(static_cast<int>(a2.vec_x)) + ", " + std::to_string(static_cast<int>(a2.vec_y)) + ", " + std::to_string(static_cast<int>(a2.vec_z)) + "), " + "(" + std::to_string(static_cast<int>(a3.vec_x)) + ", " + std::to_string(static_cast<int>(a3.vec_y)) + ", " + std::to_string(static_cast<int>(a3.vec_z)) + "), " + "point of their beginning: (" + std::to_string(static_cast<int>(a1.beg.x)) + ", " + std::to_string(static_cast<int>(a1.beg.y)) + ", " + std::to_string(static_cast<int>(a1.beg.z)) + "), " + std::to_string(static_cast<int>(value)) + "}";
         return s;
     }
 };
+
 #endif /* Parallelepiped_hpp */
