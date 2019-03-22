@@ -9,6 +9,8 @@
 #ifndef List_hpp
 #define List_hpp
 
+#include "Parallelepiped.hpp"
+
 
 template <typename T>
 class List {
@@ -24,7 +26,7 @@ public:
     List(); //+
     ~List(); //+
     bool empty(); //+
-    void push_back(); //+
+    void push_back(T); //+
     int length(); //+
     void print(); //+
     void print_with_address(); //+
@@ -70,18 +72,18 @@ int List<T>::length() {
 template <typename T>
 void List<T>::print() {
     Node* head = first;
-    while(head->next) {
-        std::cout << head->data << ' ';
+    while(head) {
+        std::cout << head->data.toString() << std::endl;
         head = head->next;
     }
-    std::cout << head->data << std::endl;
+   
 }
 
 template <typename T>
 void List<T>::print_with_address() {
     Node* head = first;
     while(head) {
-        std::cout << "Element's data: " << head->data << ", Address: " << head << std::endl;
+        std::cout << "Element's data: " << head->data.toString() << ", Address: " << head << std::endl;
         head = head->next;
     }
 }
