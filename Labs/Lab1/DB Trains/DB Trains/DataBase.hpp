@@ -63,6 +63,9 @@ public:
     
     void save();
     
+    void generate(size_t);
+    void Open(std::string path = "", OpenMode om = OpenMode::TXT);
+    
     
 };
 

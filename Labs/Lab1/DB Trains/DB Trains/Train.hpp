@@ -27,7 +27,7 @@ enum class Type {INTERNATIONAL, FAST, ORDINARY, SUBURBAN};
 
 class Train {
 private:
-    static short count;
+    static int count;
     int id;
     short train_number;
     std::string name;

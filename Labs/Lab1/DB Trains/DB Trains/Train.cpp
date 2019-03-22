@@ -10,7 +10,7 @@
 #include <sstream>
 #include <algorithm>
 
-short Train::count = 0;
+int Train::count = 0;
 
 std::string Train::Serialize() {
     std::ostringstream os;

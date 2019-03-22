@@ -75,16 +75,20 @@ void binary_saving();
 
 int main() {
     
-    
-    
     DataBase db(PATH);
-    db.read();
+    db.generate(50000);
     
-
-    Criteria c("dwa");
-    std::vector<Train> vec = db.search(c);
     
-    vec[0].PrintTrain();
+//
+//    DataBase db(PATH);
+//    db.read();
+//
+//    Criteria c("dwa");
+//    Criteria m(Type::INTERNATIONAL, 1111, 2222);
+//    Criteria b({5,5,5}, {66, 23});
+//    std::vector<Train> vec = db.search(m);
+//
+//    vec[0].PrintTrain();
 //    DataBase db(PATH);
 //    Train t;
 //    t.SetName("train");
