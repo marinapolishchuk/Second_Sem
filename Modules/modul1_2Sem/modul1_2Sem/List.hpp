@@ -49,22 +49,23 @@ List::~List() {
         head = head->next;
         delete temp;
     }
-    delete head;
     first = last = nullptr;
 }
 
 bool List::empty() {
-    return first == nullptr;
+    return len == 0;
 }
 
 void List::push_back(Parallelepiped dat) {
-    len++;
     if (empty()) {
         first = last = new Node{dat, dat.Get_Value() % 17, first};
+        len++;
         return;
     }
     last->next = new Node{dat, dat.Get_Value() % 17, first};
     last = last->next;
+    len++;
+
 }
 
 int List::length() {
@@ -72,6 +73,10 @@ int List::length() {
 }
 
 void List::print() {
+    if (empty()) {
+        std::cout << "Empty" << std::endl;
+        return;
+    }
     Node* head = first;
     while(head != last) {
         std::cout << head->data.toString() << std::endl;
@@ -99,7 +104,7 @@ void List::print_keys() {
 }
 
 void List::remove(size_t indx) {
-    if(indx >= len) { std::cout << "Error. Entered index is not valid" << std::endl; return; }
+    if(indx >= len) { std::cout << "Error in remove. Entered index is not valid" << std::endl; return; }
     Node* head = first;
     int count = 0;
     while (count != indx - 1) {
@@ -167,11 +172,14 @@ void List::transform() {
         }
         if (!removed) break;
     }
+    if (del_count >= 1181) {
+        std::cout << "Woah! Deleting limit was reached. The Universe collapsed..." << std::endl;
+    }
 }
 
 
 void List::insert(size_t indx, Parallelepiped dat) {
-    if(indx > len) { std::cout << "Error. Entered index is not valid" << std::endl; return; }
+    if(indx > len) { std::cout << "Error in insert. Entered index is not valid" << std::endl; return; }
     Node* head = first;
     int index = 0;
     while (index != indx - 1) {
@@ -202,7 +210,7 @@ void List::insert(size_t indx, Parallelepiped dat) {
 }
 
 Parallelepiped List::get(size_t indx) {
-    if(indx >= len) { std::cout << "Error. Entered index is not valid" << std::endl; return Parallelepiped(); }
+    if(indx >= len) { std::cout << "Error in get. Entered index is not valid" << std::endl; return Parallelepiped(); }
     Node* head = first;
     int count = 0;
     while (count != indx - 1) {

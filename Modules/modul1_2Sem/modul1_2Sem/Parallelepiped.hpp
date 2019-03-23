@@ -57,6 +57,8 @@ private:
 public:
     Parallelepiped() : v(3) {};
     
+    Parallelepiped& operator=(const Parallelepiped&);
+    
     void print_vecs() {
         std::cout << "(" << a1.vec_x << ", " << a1.vec_y << ", " << a1.vec_z << ")" << ", " ;
         std::cout << "(" << a2.vec_x << ", " << a2.vec_y << ", " << a2.vec_z << ")" << ", ";
@@ -115,5 +117,17 @@ public:
         return s;
     }
 };
+
+Parallelepiped& Parallelepiped::operator=(const Parallelepiped & p) {
+    a1 = p.a1;
+    a2 = p.a2;
+    a3 = p.a3;
+    v = p.v;
+    volume = p.volume;
+    value = p.value;
+    surface = p.surface;
+    
+    return *this;
+}
 
 #endif /* Parallelepiped_hpp */

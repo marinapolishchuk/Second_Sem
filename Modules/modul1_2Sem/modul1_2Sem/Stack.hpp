@@ -24,6 +24,7 @@ public:
     void pop();
     int size();
     bool empty();
+    void print();
     
 };
 
@@ -54,5 +55,14 @@ void Stack::pop() {
 int Stack::size() {return len;}
 
 bool Stack::empty() {return len == 0;}
+
+void Stack::print() {
+    if (empty()) {
+        std::cout << "Empty" << std::endl;
+        return;
+    }
+    for (int i = 0; i < len; ++i)
+        std::cout << arr[i].toString() << std::endl;
+}
 
 #endif /* Stack_hp */
