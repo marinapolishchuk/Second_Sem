@@ -15,7 +15,7 @@ DataBase::DataBase(std::string path, OpenMode om): len(0), saved(true), wasRead(
     if(om == OpenMode::TXT) {
         of.open(path);
     } else {
-        of.open(path, std::ios::binary);
+        of.open(path, std::ios::binary | std::ios::in | std::ios::out | std::ios::app);
     }
     this->om = om;
     if(!of.is_open()) { std::cout << "Error in file opening" << std::endl; }
