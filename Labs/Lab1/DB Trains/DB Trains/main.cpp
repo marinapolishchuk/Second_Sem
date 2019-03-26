@@ -11,15 +11,11 @@
 #include "Train.hpp"
 
 std::string PATH = "/Users/marinapolishchuk/Second_Sem/Labs/Lab1/DB Trains/DB Trains/Trains.txt";
-
 void interactive_mode_for_simple_saving(); //+
 void demo_mode_for_simple_saving(); //+
 
-void interactive_mode_for_txt_saving();
-void demo_mode_for_txt_saving(); //+
-
-void interactive_mode_for_bin_saving();
-void demo_mode_for_bin_saving();
+void interactive_mode_for_file_saving();
+void demo_mode_for_file_saving(); //+
 
 void simple_saving() {
     int choice;
@@ -38,8 +34,7 @@ void simple_saving() {
             break;
     }
 };
-void txt_saving();
-void binary_saving();
+void file_saving();
 
 int main() {
     
@@ -102,8 +97,7 @@ int main() {
    
     std::cout << "Choose the mechanism of saving to work with:"
     << "\n\t1. Simple saving (std::vector)"
-    << "\n\t2. Saving in txt file"
-    << "\n\t3. Saving in binary file" << std::endl;
+    << "\n\t2. Saving in file" << std::endl;
     int choice = 0;
     std::cin >> choice;
     
@@ -114,12 +108,8 @@ int main() {
             break;
         }
         case 2: {
-            std::cout << "You've chosen saving in txt file." << std::endl;
-            demo_mode_for_txt_saving();
-            break;
-        }
-        case 3: {
-            std::cout << "You've chosen saving in binary file." << std::endl;
+            std::cout << "You've chosen saving in file." << std::endl;
+            demo_mode_for_file_saving();
             break;
         }
         default: {
@@ -292,61 +282,128 @@ void demo_mode_for_simple_saving() {
     vec.clear();
 }
 
-void demo_mode_for_txt_saving() {
-    std::cout << "Welcome to the demo mode for txt saving." << std::endl;
-    DataBase db(PATH, OpenMode::TXT);
-    std::cout << "Generating of 10 trains." << std::endl;
-    db.generate(10);
-    std::cout << "10 elements were generated." << std::endl;
-    std::cout << "Here they are: " << std::endl;
-    std::vector<Train> vec = db.getTrains();
-    for (auto a: vec) {
-        a.PrintTrain();
+void demo_mode_for_file_saving() {
+    std::cout << "Choose txt(1) or binary(2) file:" << std::endl;
+    int choice = 0;
+    std::cin >> choice;
+    switch (choice) {
+        case 1: {
+            DataBase db(PATH, OpenMode::TXT);
+            std::cout << "Txt was chosen" << std::endl;
+            std::cout << "\nGenerating of 10 trains." << std::endl;
+            db.generate(10);
+            std::cout << "10 elements were generated." << std::endl;
+            std::cout << "Here they are: " << std::endl;
+            std::vector<Train> vec = db.getTrains();
+            for (auto a: vec) {
+                a.PrintTrain();
+            }
+            std::cout << "\nDemonstration of adding method: " << std::endl;
+            Train t;
+            t.SetName("train1");
+            t.SetType(Type::INTERNATIONAL);
+            t.SetNumber(1111);
+            t.SetArrival({11, 11, 2001}, {11, 11});
+            t.SetDeparture({12, 12, 2001}, {11, 11});
+            t.SetTicketReq(100);
+            t.SetNumOfSeats(200);
+            t.SetPopularity();
+            db.Add(t);
+            vec = db.getTrains();
+            
+            std::cout << "Data base after adding an element: " << std::endl;
+            for (auto a: vec) {
+                a.PrintTrain();
+            }
+            
+            std::vector<Train> search_vec;
+            std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
+            std::cout << "\nBy name(Criteria c(\"85_5\")): ";
+            Criteria c("85_5");
+            search_vec = db.search(c);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            
+            std::cout << "\nBy type and number(Criteria l(Type::Ordinary, 5000, 6000): ";
+            Criteria l(Type::ORDINARY, 5000, 6000);
+            search_vec = db.search(l);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            
+            std::cout << "\nBy departure date and time(Criteria m({1,1,2019}, {1,1}): ";
+            Criteria m({1,1,2019}, {1, 1});
+            search_vec = db.search(m);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            break;
+        }
+        case 2: {
+            
+            DataBase db(PATH, OpenMode::BINARY);
+            std::cout << "Binary was chosen" << std::endl;
+            std::cout << "Generating of 10 trains." << std::endl;
+            db.generate(10);
+            std::cout << "10 elements were generated." << std::endl;
+            std::cout << "Here they are: " << std::endl;
+            std::vector<Train> vec = db.getTrains();
+            for (auto a: vec) {
+                a.PrintTrain();
+            }
+            std::cout << "\nDemonstration of adding method: " << std::endl;
+            Train t;
+            t.SetName("train1");
+            t.SetType(Type::INTERNATIONAL);
+            t.SetNumber(1111);
+            t.SetArrival({11, 11, 2001}, {11, 11});
+            t.SetDeparture({12, 12, 2001}, {11, 11});
+            t.SetTicketReq(100);
+            t.SetNumOfSeats(200);
+            t.SetPopularity();
+            db.Add(t);
+            vec = db.getTrains();
+            
+            std::cout << "Data base after adding an element: " << std::endl;
+            for (auto a: vec) {
+                a.PrintTrain();
+            }
+            
+            std::vector<Train> search_vec;
+            std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
+            std::cout << "\nBy name(Criteria c(\"85_5\")): ";
+            Criteria c("85_5");
+            search_vec = db.search(c);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            
+            std::cout << "\nBy type and number(Criteria l(Type::Ordinary, 5000, 6000): ";
+            Criteria l(Type::ORDINARY, 5000, 6000);
+            search_vec = db.search(l);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            
+            std::cout << "\nBy departure date and time(Criteria m({1,1,2019}, {1,1}): ";
+            Criteria m({1,1,2019}, {1, 1});
+            search_vec = db.search(m);
+            for (auto a: search_vec) {
+                a.PrintTrain();
+            }
+            search_vec.clear();
+            break;
+        }
+        default: {
+            std::cout << "An option was chosen incorrectly." << std::endl;
+            break;
+        }
     }
-    std::cout << "\nDemonstration of adding method: " << std::endl;
-    Train t;
-    t.SetName("train1");
-    t.SetType(Type::INTERNATIONAL);
-    t.SetNumber(1111);
-    t.SetArrival({11, 11, 2001}, {11, 11});
-    t.SetDeparture({12, 12, 2001}, {11, 11});
-    t.SetTicketReq(100);
-    t.SetNumOfSeats(200);
-    t.SetPopularity();
-    db.Add(t);
-    vec = db.getTrains();
-
-    std::cout << "Data base after adding an element: " << std::endl;
-    for (auto a: vec) {
-        a.PrintTrain();
-    }
-   
-    std::vector<Train> search_vec;
-    std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
-    std::cout << "\nBy name(Criteria c(\"85_5\")): ";
-    Criteria c("85_5");
-    search_vec = db.search(c);
-    for (auto a: search_vec) {
-        a.PrintTrain();
-    }
-    search_vec.clear();
-    
-    std::cout << "\nBy type and number(Criteria l(Type::Ordinary, 5000, 6000): ";
-    Criteria l(Type::ORDINARY, 5000, 6000);
-    search_vec = db.search(l);
-    for (auto a: search_vec) {
-        a.PrintTrain();
-    }
-    search_vec.clear();
-    
-    std::cout << "\nBy departure date and time(Criteria m({1,1,2019}, {1,1}): ";
-    Criteria m({1,1,2019}, {1, 1});
-    search_vec = db.search(m);
-    for (auto a: search_vec) {
-        a.PrintTrain();
-    }
-    search_vec.clear();
-};
-
-
+}
 
