@@ -12,7 +12,95 @@
 
 std::string PATH = "/Users/marinapolishchuk/Second_Sem/Labs/Lab1/DB Trains/DB Trains/Trains.txt";
 
-void interactive_mode_for_simple_saving();
+void interactive_mode_for_simple_saving() {
+    DataBase db;
+    std::cout << "Welcome to the interactive mode fore simple saving." << std::endl;
+    std::cout << "How many trains would you like to add to your data base?" << std::endl;
+    int num_of_trains = 0;
+    std::cin >> num_of_trains;
+    std::vector<Train> vec;
+    for (int i = 0; i < num_of_trains; ++i) {
+        std::cout << "START" << std::endl;
+        Train t;
+        std::cout << "Enter name" << std::endl;
+        std::string name;
+        std::cin >> name;
+        t.SetName(name);
+        
+        std::cout << "Enter type" << std::endl;
+        int tp;
+        std::cin >> tp;
+        t.SetType(static_cast<Type>(tp));
+        
+        std::cout << "Enter number" << std::endl;
+        int number;
+        std::cin >> number;
+        t.SetNumber(number);
+        
+        std::cout << "Enter arrival date and time" << std::endl;
+        int d, m, y, h, min;
+        std::cin >> d >> m >> y >> h >> min;
+        t.SetArrival({d, m, y}, {h, min});
+    
+        std::cout << "Enter departure date and time" << std::endl;
+        int d2, m2, y2, h2, min2;
+        std::cin >> d2 >> m2 >> y2 >> h2 >> min2;
+        t.SetDeparture({d2, m2, y2}, {h2, min2});
+        
+        std::cout << "Enter number of seats" << std::endl;
+        int num_of_seats;
+        std::cin >> num_of_seats;
+        t.SetNumOfSeats(num_of_seats);
+        
+        std::cout << "Enter ticket requests" << std::endl;
+        int tr;
+        std::cin >> tr;
+        t.SetTicketReq(tr);
+        
+        t.SetPopularity();
+        vec.push_back(t);
+    }
+    
+    std::cout << "There is your db: " << std::endl;
+    for(auto a: vec) {
+        a.PrintTrain();
+    }
+    
+    std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
+    std::cout << "\nBy name: " << std::endl;
+    std::string str;
+    std::cout << "Enter by_name criteria:" << std::endl;
+    std::cin >> str;
+    Criteria a(str);
+    std::vector<Train> search_vec = db.search(a);
+    for (auto a: search_vec) {
+        a.PrintTrain();
+    }
+    search_vec.clear();
+    
+    
+    std::cout << "\nBy type and number: ";
+    std::cout << "Enter by_type criteria:" << std::endl;
+    int q = 0, w = 0, e = 0;
+    std::cin >> q >> w >> e;
+    Criteria b(static_cast<Type>(q), w, e);
+    search_vec = db.search(b);
+    for (auto a: search_vec) {
+        a.PrintTrain();
+    }
+    search_vec.clear();
+    
+    std::cout << "\nBy departure date and time: ";
+    std::cout << "Enter by_dep criteria:" << std::endl;
+    int z, x, c, v, n;
+    std::cin >> z >> x >> c >> v >> n;
+    Criteria m({z, x, c}, {v, n});
+    search_vec = db.search(m);
+    for (auto a: search_vec) {
+        a.PrintTrain();
+    }
+    search_vec.clear();
+}
 void demo_mode_for_simple_saving() {
     std::cout << "Welcome to the demo mode fore simple saving." << std::endl;
     std::cout << "There are three trains." << std::endl;
@@ -59,8 +147,30 @@ void demo_mode_for_simple_saving() {
     db.Printf();
     std::cout << "\n######################################" << std::endl;
     
-    // . . . // демонстрация поиска по заданному критерию.
+    std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
+    std::cout << "\nBy name(Criteria c(\"2\")): ";
+    Criteria c("2");
+    std::vector<Train> vec = db.search(c);
+    for (auto a: vec) {
+        a.PrintTrain();
+    }
+    vec.clear();
     
+    std::cout << "\nBy type and number(Criteria t(Type::INTERNATIONAL, 1110, 2222): ";
+    Criteria t(Type::INTERNATIONAL, 1110, 2222);
+    vec = db.search(t);
+    for (auto a: vec) {
+        a.PrintTrain();
+    }
+    vec.clear();
+    
+    std::cout << "\nBy departure date and time(Criteria m({30,30,2000}, {20, 20}): ";
+    Criteria m({30,30,2000}, {20, 20});
+    vec = db.search(m);
+    for (auto a: vec) {
+        a.PrintTrain();
+    }
+    vec.clear();
 }
 
 void interactive_mode_for_txt_saving();
@@ -69,14 +179,30 @@ void demo_mode_for_txt_saving();
 void interactive_mode_for_bin_saving();
 void demo_mode_for_bin_saving();
 
-void simple_saving();
+void simple_saving() {
+    int choice;
+    std::cout << "Choose demo(1) or interactive(2) mode: ";
+    std::cin >> choice;
+    switch (choice) {
+        case 1: {
+            demo_mode_for_simple_saving();
+            break;
+        }
+        case 2: {
+            interactive_mode_for_simple_saving();
+            break;
+        }
+        default: std::cout << "Mode was chosen incorrectly." << std::endl;
+            break;
+    }
+};
 void txt_saving();
 void binary_saving();
 
 int main() {
     
-    DataBase db(PATH);
-    db.generate(50000);
+   // DataBase db(PATH);
+   // db.generate(500);
     
     
 //
@@ -129,7 +255,7 @@ int main() {
     dbtxt.AddToTxt(n);
     std::cout << dbtxt.isEmpty() << ' ' << dbtxt.length() << std::endl;
    
-    
+    */
     
     
     
@@ -143,8 +269,7 @@ int main() {
     switch (choice) {
         case 1: {
             std::cout << "You've chosen simple saving." << std::endl;
-            demo_mode_for_simple_saving();
-            //simple_saving();
+            simple_saving();
             break;
         }
         case 2: {
@@ -161,7 +286,7 @@ int main() {
             std::cout << "An option was chosen incorrectly." << std::endl;
             break;
         }
-    }*/
+    }
    
     return 0;
 }
