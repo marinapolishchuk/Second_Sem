@@ -9,6 +9,7 @@
 #include <iostream>
 #include "DataBase.hpp"
 #include "Train.hpp"
+#include "Benchmark.hpp"
 
 std::string PATH = "/Users/marinapolishchuk/Second_Sem/Labs/Lab1/DB Trains/DB Trains/Trains.txt";
 void interactive_mode_for_simple_saving(); //+
@@ -83,7 +84,8 @@ int main() {
    
     std::cout << "Choose the mechanism of saving to work with:"
     << "\n\t1. Simple saving (std::vector)"
-    << "\n\t2. Saving in file" << std::endl;
+    << "\n\t2. Saving in file"
+    << "\n\t3. Benchmark mode" << std::endl;
     int choice = 0;
     std::cin >> choice;
 
@@ -98,6 +100,12 @@ int main() {
             file_saving();
             break;
         }
+        case 3: {
+            std::cout << "You've chosen benchmark mode." << std::endl;
+            benchmark_mode();
+            break;
+        }
+            
         default: {
             std::cout << "An option was chosen incorrectly." << std::endl;
             break;
