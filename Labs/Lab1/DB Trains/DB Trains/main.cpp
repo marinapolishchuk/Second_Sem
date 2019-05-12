@@ -7,9 +7,13 @@
 //
 
 #include <iostream>
+#include <functional>
+#include <vector>
 #include "DataBase.hpp"
 #include "Train.hpp"
 #include "Benchmark.hpp"
+
+#define SORT
 
 std::string PATH = "/Users/marinapolishchuk/Second_Sem/Labs/Lab1/DB Trains/DB Trains/Trains.txt";
 void interactive_mode_for_simple_saving(); //+
@@ -53,6 +57,124 @@ void file_saving() {
     }
 }
 
+#ifdef SORT
+
+constexpr int COMP_BY_ID            = 1;
+constexpr int COMP_BY_NUMBER        = 1 << 1;
+constexpr int COMP_BY_NAME          = 1 << 2;
+constexpr int COMP_BY_TYPE          = 1 << 3;
+constexpr int COMP_BY_ARR_DATE      = 1 << 4;
+constexpr int COMP_BY_ARR_TIME      = 1 << 5;
+constexpr int COMP_BY_DEP_DATE      = 1 << 6;
+constexpr int COMP_BY_DEP_TIME      = 1 << 7;
+constexpr int COMP_BY_POPULARITY    = 1 << 8;
+
+std::function<bool(Train, Train)> GetLambda(std::vector<int> comp_fields) {
+    static auto comp_by_id          = [](Train a, Train b){ return a.GetID() < b.GetID(); };
+    static auto comp_by_number      = [](Train a, Train b){ return a.GetNumber() < b.GetNumber(); };
+    static auto comp_by_name        = [](Train a, Train b){ return a.GetName() < b.GetName(); };
+    static auto comp_by_type        = [](Train a, Train b){ return a.GetType() < b.GetType(); };
+    static auto comp_by_arr_date    = [](Train a, Train b){ return a.GetArrDate() < b.GetArrDate(); };
+    static auto comp_by_arr_time    = [](Train a, Train b){ return a.GetArrTime() < b.GetArrTime(); };
+    static auto comp_by_dep_date    = [](Train a, Train b){ return a.GetDepDate() < b.GetDepDate(); };
+    static auto comp_by_dep_time    = [](Train a, Train b){ return a.GetDepTime() < b.GetDepTime(); };
+    static auto comp_by_popularity  = [](Train a, Train b){ return a.GetPopularity() < b.GetPopularity(); };
+    
+    std::vector<std::function<bool(Train, Train)>> comps;
+    
+    for (auto comp_field: comp_fields) {
+        if (comp_field & COMP_BY_ID) { comps.push_back(comp_by_id); }
+        else if (comp_field & COMP_BY_NUMBER) { comps.push_back(comp_by_number); }
+        else if (comp_field & COMP_BY_NAME) { comps.push_back(comp_by_name); }
+        else if (comp_field & COMP_BY_TYPE) { comps.push_back(comp_by_type); }
+        else if (comp_field & COMP_BY_ARR_DATE) { comps.push_back(comp_by_arr_date); }
+        else if (comp_field & COMP_BY_ARR_TIME) { comps.push_back(comp_by_arr_time); }
+        else if (comp_field & COMP_BY_DEP_DATE) { comps.push_back(comp_by_dep_date); }
+        else if (comp_field & COMP_BY_DEP_TIME) { comps.push_back(comp_by_dep_time); }
+        else if (comp_field & COMP_BY_POPULARITY) { comps.push_back(comp_by_popularity); }
+    }
+    
+    auto comp_final = [comps](Train a, Train b){
+        for (auto comp: comps) {
+            if (comp(a, b)) { return true; }
+        }
+        return false;
+    };
+    return comp_final;
+}
+
+
+int main() {
+//    DataBase db;
+//    db.generate(5);
+//    db.print();
+//    std::vector<int> comps = {COMP_BY_DEP_TIME};
+//    auto comp = GetLambda(comps);
+//    db.sort(comp);
+//    std::cout << std::endl;
+//    db.print();
+
+
+    DataBase db;
+    int size = 10;
+    db.generate(size);
+    std::cout << "Data base before sorting:\n";
+    db.print();
+
+    DataBase db_1field;
+    DataBase db_2fields;
+    DataBase db_counting;
+    DataBase db_radix;
+
+    for (int i  = 0; i < size; ++i) {
+        std::vector<Train> temp = db.get_trains();
+        db_1field.add(temp[i]);
+        db_2fields.add(temp[i]);
+        db_counting.add(temp[i]);
+        db_radix.add(temp[i]);
+    }
+
+    std::vector<int> comps1 = {COMP_BY_POPULARITY};
+    auto comp1 = GetLambda(comps1);
+    clock_t start1 = clock();
+    db_1field.sort(comp1);
+    clock_t end1 = clock();
+    clock_t res1 = end1 - start1;
+    std::cout << "\n\nSorted by one field (POPULARITY):\n";
+    db_1field.print();
+    std::cout << "Time of working: " << res1 << std::endl;
+
+    std::vector<int> comps2 = {COMP_BY_NUMBER, COMP_BY_TYPE};
+    auto comp2 = GetLambda(comps2);
+    clock_t start2 = clock();
+    db_2fields.sort(comp2);
+    clock_t end2 = clock();
+    clock_t res2 = end2 - start2;
+    std::cout << "\n\nSorted by two fields (NUMBER, TYPE):\n";
+    db_2fields.print();
+    std::cout << "Time of working: " << res2 << std::endl;
+    
+    clock_t start3 = clock();
+    db_counting.counting_sort_by_type(0, 3);
+    clock_t end3 = clock();
+    clock_t res3 = end3 - start3;
+    std::cout << "\n\nCounting sort by type:\n";
+    db_counting.print();
+    std::cout << "Time of working: " << res3 << std::endl;
+    
+    clock_t start4 = clock();
+    db_radix.radix_sort_by_number();
+    clock_t end4 = clock();
+    clock_t res4 = end4 - start4;
+    std::cout << "\n\nRadix sort by number:\n";
+    db_radix.print();
+    std::cout << "Time of working: " << res4 << std::endl;
+    
+    return 0;
+}
+#endif
+
+#ifndef SORT
 int main() {
 
 //
@@ -114,6 +236,7 @@ int main() {
 
     return 0;
 }
+#endif
 
 void interactive_mode_for_simple_saving() {
     DataBase db;
@@ -237,17 +360,17 @@ void demo_mode_for_simple_saving() {
     DataBase db;
     std::cout << "\n######################################" << std::endl;
     std::cout << "\nPrint and add method: ################" << std::endl;
-    std::cout << "\nisEmpty method: " << db.isEmpty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
-    db.Add(t1);
-    std::cout << "\nisEmpty method: " << db.isEmpty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
-    db.Print();
-    db.Add(t2);
-    std::cout << "\nisEmpty method: " << db.isEmpty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
-    db.Print();
-    db.Add(t3);
-    std::cout << "\nisEmpty method: " << db.isEmpty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
-    db.Print();
-    db.Printf();
+    std::cout << "\nisEmpty method: " << db.is_empty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
+    db.add(t1);
+    std::cout << "\nisEmpty method: " << db.is_empty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
+    db.print();
+    db.add(t2);
+    std::cout << "\nisEmpty method: " << db.is_empty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
+    db.print();
+    db.add(t3);
+    std::cout << "\nisEmpty method: " << db.is_empty() << "\nThere are " << db.length() << " trains.(length() method)" << std::endl;
+    db.print();
+    db.printf();
     std::cout << "\n######################################" << std::endl;
     
     std::cout <<  "\nSearching by criteria demonstration: " << std::endl;
@@ -288,7 +411,7 @@ void demo_mode_for_file_saving() {
             db.generate(10);
             std::cout << "10 elements were generated." << std::endl;
             std::cout << "Here they are: " << std::endl;
-            std::vector<Train> vec = db.getTrains();
+            std::vector<Train> vec = db.get_trains();
             for (auto a: vec) {
                 a.PrintTrain();
             }
@@ -302,8 +425,8 @@ void demo_mode_for_file_saving() {
             t.SetTicketReq(100);
             t.SetNumOfSeats(200);
             t.SetPopularity();
-            db.Add(t);
-            vec = db.getTrains();
+            db.add(t);
+            vec = db.get_trains();
             
             std::cout << "Data base after adding an element: " << std::endl;
             for (auto a: vec) {
@@ -344,7 +467,7 @@ void demo_mode_for_file_saving() {
             db.generate(10);
             std::cout << "10 elements were generated." << std::endl;
             std::cout << "Here they are: " << std::endl;
-            std::vector<Train> vec = db.getTrains();
+            std::vector<Train> vec = db.get_trains();
             for (auto a: vec) {
                 a.PrintTrain();
             }
@@ -358,8 +481,8 @@ void demo_mode_for_file_saving() {
             t.SetTicketReq(100);
             t.SetNumOfSeats(200);
             t.SetPopularity();
-            db.Add(t);
-            vec = db.getTrains();
+            db.add(t);
+            vec = db.get_trains();
             
             std::cout << "Data base after adding an element: " << std::endl;
             for (auto a: vec) {
@@ -456,7 +579,7 @@ void interactive_mode_for_file_saving() {
                 t.SetTicketReq(tr);
                 
                 t.SetPopularity();
-                db.Add(t);
+                db.add(t);
             }
             
             
@@ -550,7 +673,7 @@ void interactive_mode_for_file_saving() {
                 t.SetTicketReq(tr);
                 
                 t.SetPopularity();
-                db.Add(t);
+                db.add(t);
             }
             
             

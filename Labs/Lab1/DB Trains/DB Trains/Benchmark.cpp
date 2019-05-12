@@ -16,7 +16,7 @@ void benchmark_mode() {
     unsigned int start_time =  clock();
     DataBase db(PATH, OpenMode::TXT);
     db.generate(10);
-    std::vector<Train> vec = db.getTrains();
+    std::vector<Train> vec = db.get_trains();
     for (auto a: vec) {
         a.PrintTrain();
     }

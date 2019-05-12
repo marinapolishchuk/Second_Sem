@@ -16,11 +16,23 @@ struct Date {
     int day;
     int month;
     int year;
+    bool operator<(const Date& rhs){
+        int d1 = this->day + this->month * 31 + this->year * 365;
+        int d2 = rhs.day + rhs.month * 31 + rhs.year * 365;
+        if (d1 < d2) { return true; }
+        return false;
+    }
 };
 
 struct Time {
     int hours;
     int minutes;
+    bool operator<(const Time& rhs){
+        int t1 = this->minutes + this->hours * 60;
+        int t2 = rhs.minutes + rhs.hours * 60;
+        if (t1 < t2) { return true; }
+        return false;
+    }
 };
 
 enum class Type {INTERNATIONAL, FAST, ORDINARY, SUBURBAN};
@@ -83,6 +95,7 @@ public:
         << "\nDeparture date and time: " << departure_date.day << '.' << departure_date.month << '.' << departure_date.year << ' ' << departure_time.hours << ':' << departure_time.minutes
         << "\nTrain popularity: " << popularity << std::endl;
     }
+    
 };
 
 

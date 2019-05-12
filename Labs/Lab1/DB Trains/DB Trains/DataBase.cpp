@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
+#include <queue>
 #include "DataBase.hpp"
 
 DataBase::DataBase(std::string path, OpenMode om): len(0), saved(true), wasRead(false){
@@ -26,21 +28,21 @@ DataBase::~DataBase(){
     if (of.is_open()) of.close();
 }
 
-bool DataBase::isEmpty() {
+bool DataBase::is_empty() {
     if (len == 0) return true;
     return false;
 }
 
 int DataBase::length() { return len; }
 
-void DataBase::Add(Train t) { trains.push_back(t); len++; saved = false;}
+void DataBase::add(Train t) { trains.push_back(t); len++; saved = false;}
 
-void DataBase::Print() {
+void DataBase::print() {
     for (int i = 0; i < len; ++i) {
         std::cout << trains[i].Serialize();
     }
 }
-void DataBase::Printf() {
+void DataBase::printf() {
     for (int i = 0; i < len; ++i) {
         trains[i].PrintTrain();
     }
@@ -55,7 +57,7 @@ void DataBase::save() {
     saved = true;
 }
 
-std::vector<Train> DataBase::getTrains() {
+std::vector<Train> DataBase::get_trains() {
     return trains;
 }
 
@@ -106,7 +108,7 @@ std::vector<Train> DataBase::search(Criteria sc) {
     return res;
 }
 
-void DataBase::Open(std::string path, OpenMode om) {
+void DataBase::open(std::string path, OpenMode om) {
     wasRead = false;
     if(path.empty()) { this->om = OpenMode::VECTOR; return; }
     if(om == OpenMode::TXT) {
@@ -130,8 +132,54 @@ void DataBase::generate(size_t n) {
         t.SetNumOfSeats(rand() % 1000 + 1);
         t.SetPopularity();
         trains.push_back(t);
+        len++;
     }
     saved = false;
+}
+
+void DataBase::counting_sort_by_type(int range_low, int range_high) {
+    std::vector<Train> res_vec(len);
+    int range = range_high - range_low + 1;
+    int count[range];
+    for (int i = 0; i < range; ++i) {
+        count[i] = 0;
+    }
+    
+    for (int i = 0; i < len; ++i) {
+        count[static_cast<int>(trains[i].GetType())] += 1;
+    }
+    
+    for (int i = 1; i < range; ++i) {
+        count[i] += count[i - 1];
+    }
+    
+    for (int i = len; i >= 0; --i) {
+        count[static_cast<int>(trains[i - 1].GetType())] -= 1;
+        res_vec[count[static_cast<int>(trains[i - 1].GetType())]] = trains[i - 1];
+    }
+    
+    for (int i = 0; i < len; ++i) {
+        trains[i] = res_vec[i];
+    }
+}
+
+void DataBase::radix_sort_by_number() {
+    int digits = 4;
+    int max_digits = digits;
+    std::queue<Train> q[10];
+    while (digits != 0) {
+        int divisor = (int) (pow(10, max_digits - digits--));
+        for (int i = 0; i < len; ++i) {
+            int zeroth_place = (trains[i].GetNumber() / divisor) % 10;
+            q[zeroth_place].push(trains[i]);
+        }
+        for (int i = 0, j = 0; i < 10; ++i) {
+            while(!q[i].empty()) {
+                trains[j++] = q[i].front();
+                q[i].pop();
+            }
+        }
+    }
 }
 
 

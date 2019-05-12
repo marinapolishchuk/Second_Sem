@@ -56,3 +56,5 @@ void Train::SetDeparture(Date d, Time t) { departure_date = d; departure_time = 
 void Train::SetArrival(Date d, Time t) { arrival_date = d; arrival_time = t; }
 void Train::SetType(Type t) { type = t; }
 void Train::SetName(std::string n) { name = n; }
+
+
