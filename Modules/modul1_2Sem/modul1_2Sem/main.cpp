@@ -13,7 +13,7 @@
 #include "Vector.hpp"
 
 void task3(List& l, Stack& s);
-void task4();
+//void task4();
 
 
 void addToArr(Array<Vector<Parallelepiped>, 103> arr, Parallelepiped p);
@@ -29,7 +29,7 @@ int main() {
         s.add(p);
     }
     task3(l, s);
-    task4();
+   // task4();
     return 0;
 }
 
