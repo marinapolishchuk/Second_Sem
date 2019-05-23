@@ -9,10 +9,11 @@
 #include <array>
 #include "TreeNode.hpp"
 #include "BinaryTree.hpp"
+#include "Graph.hpp"
 //#define TASK1 //+
 //#define TASK2 //+
-//#define TASK3
-#define TASK4
+#define TASK3 //+
+//#define TASK4 //+
 
 
 
@@ -109,6 +110,20 @@ int main() {
 #endif
     
 #ifdef TASK3
+    
+    WebProg prot;
+    prot.generate(nullptr);
+    std::vector<WebProg> vs(37);
+    vs[0].generate(&prot);
+    for (int i = 1; i < vs.size(); ++i) {
+        vs[i].generate(&vs[i - 1]);
+    }
+    
+    Graph g(vs);
+    g.generate_links(WebProg::calculate_distance(prot, vs[0]));
+    g.print();
+    auto ds = g.get_comps_diametrs();
+    
     
 #endif
     
