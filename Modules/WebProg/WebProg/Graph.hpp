@@ -16,8 +16,8 @@ class Graph {
     using Matrix = std::vector<std::vector<bool>>;
     std::vector<WebProg> v;
     Matrix adj_matr;
-    void dfs(int start, std::vector<bool>& visited, std::vector<int>& comp);
-    std::vector<std::vector<int>> get_comps();
+    void dfs(int start, std::vector<bool>& visited, std::vector<int>& comp); //+
+    std::vector<std::vector<int>> get_comps(); //+
 public:
     Graph() = delete;
     Graph(const std::vector<WebProg>& vortexes);

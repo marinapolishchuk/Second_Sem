@@ -20,8 +20,9 @@ void Graph::dfs(int start, std::vector<bool>& visited, std::vector<int>& comp) {
     comp.push_back(start);
     visited[start] = true;
     for (int i = 0; i < adj_matr.size(); ++i) {
-        if (adj_matr[start][i] && !visited[i])
+        if (adj_matr[start][i] && !visited[i]) {
             dfs(i, visited, comp);
+        }
     }
 }
 
@@ -39,12 +40,12 @@ void Graph::generate_links(double dist) {
 void Graph::print() {
     for (int i = 0; i < v.size(); ++i) {
         std::cout << i;
-        bool hasAdj = false;
+        bool has_adj = false;
         for (int j = 0; j < v.size(); ++j) {
             if (adj_matr[i][j]) {
-                if (!hasAdj) {
+                if (!has_adj) {
                     std::cout << " - ";
-                    hasAdj = true;
+                    has_adj = true;
                 }
                 std::cout << j << ' ';
             }
@@ -59,7 +60,6 @@ int Graph::get_comps_number() {
 
 std::vector<std::pair<int, int>> Graph::get_comps_diametrs() {
     std::vector<std::pair<int, int>> res;
-    
     std::vector<std::vector<int>> d(adj_matr.size());
     
     constexpr int inf = 10000000;
@@ -67,9 +67,9 @@ std::vector<std::pair<int, int>> Graph::get_comps_diametrs() {
     for (int i = 0; i < d.size(); ++i) {
         std::vector<int> d_i(adj_matr.size());
         for (int j = 0; j < d_i.size(); ++j) {
-            if (adj_matr[i][j]) d_i[j] = 1;
-            else if (i != j) d_i[j] = inf;
-            else d_i[j] = 0;
+            if (adj_matr[i][j]) { d_i[j] = 1; }
+            else if (i != j) { d_i[j] = inf; }
+            else { d_i[j] = 0; }
         }
         d[i] = d_i;
     }
@@ -77,10 +77,10 @@ std::vector<std::pair<int, int>> Graph::get_comps_diametrs() {
     for (int k = 0; k < d.size(); ++k)
         for (int i = 0; i < d.size(); ++i)
             for (int j = 0; j < d.size(); ++j)
-                if (d[i][k] < inf && d[k][j] < inf)
+                if (d[i][k] < inf && d[k][j] < inf) {
                     d[i][j] = std::min(d[i][j], d[i][k] + d[k][j]);
-    
-    for (int i =0; i < d.size(); ++i) {
+                }
+    for (int i = 0; i < d.size(); ++i) {
         std::replace(d[i].begin(), d[i].end(), inf, -1);
     }
     
@@ -90,8 +90,9 @@ std::vector<std::pair<int, int>> Graph::get_comps_diametrs() {
         int max_d = -1;
         for (int j = 0; j < comps[i].size(); ++j) {
             for (int k = 0; k < d[comps[i][j]].size(); ++k) {
-                if (d[comps[i][j]][k] > max_d)
+                if (d[comps[i][j]][k] > max_d) {
                     max_d = d[comps[i][j]][k];
+                }
             }
         }
         res.push_back(std::make_pair(start, max_d));

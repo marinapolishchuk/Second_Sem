@@ -25,7 +25,7 @@ public:
     void add(WebProg& el); //+
     void print(); //+
     void print_with_addresses(); //+
-    TreeNode* get_node_by_preorder_index(int indx); //+
+    TreeNode* get_node_by_preorder_index(int indx); //!+
     int height(); //+
     int children_size(); //+
     int subtree_size(); //including the root of subtree; //+

@@ -12,7 +12,7 @@
 #include "Graph.hpp"
 //#define TASK1 //+
 //#define TASK2 //+
-#define TASK3 //+
+//#define TASK3 //+
 //#define TASK4 //+
 
 
@@ -88,6 +88,10 @@ int main() {
     arr[7].generate(&arr[4]);
     arr[8].generate(&arr[6]);
     
+    for (int i = 9; i < arr.size(); ++i) {
+        arr[i].generate(&arr[i % 5]);
+    }
+    
     for (auto &a : arr) {
         t2.add(a);
     }
@@ -118,12 +122,17 @@ int main() {
     for (int i = 1; i < vs.size(); ++i) {
         vs[i].generate(&vs[i - 1]);
     }
-    
     Graph g(vs);
     g.generate_links(WebProg::calculate_distance(prot, vs[0]));
+    std::cout << "GRAPH:" << std::endl;
     g.print();
+    std::cout << "COMPS NUMBER: " << g.get_comps_number() << std::endl;
     auto ds = g.get_comps_diametrs();
-    
+    std::cout << "COMPS DIAMETRS: " << std::endl;
+    for (auto a : ds) {
+        std::cout << "{" << a.first << ' ' << a.second << "} ";
+    }
+    std::cout << std::endl;
     
 #endif
     
@@ -133,21 +142,24 @@ int main() {
     prot.generate(nullptr);
     t.add(prot);
     
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 37; ++i) {
         WebProg w;
         w.generate(&prot);
         t.add(w);
     }
+    
+    std::cout << "TREE:" << std::endl;
     t.print();
     std::cout << std::endl;
+    
+    std::cout << "\nPOSTORDER PRINT:" << std::endl;
     t.postorder_print();
     std::cout << std::endl;
     
+    
+    std::cout << "\nSEARCH:" << std::endl;
     auto n = t.search(5.85059e+11, 1e+6);
     std::cout << n->get_data().get_name() << std::endl;
-
-   //...code here...//
-    
     
     
 #endif
