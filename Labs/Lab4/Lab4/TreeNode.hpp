@@ -28,7 +28,8 @@ public:
     TreeNode* get_element_by_path(const std::vector<int> &path); //+
     TreeNode* get_node_by_data(const int &dat); //+
     std::vector<int> get_path(const int &el); //+
-     void add_by_path(const int &dat, const std::vector<int> &path);//!!!!!!!!!!!
+    void add_by_path(const int &dat, const std::vector<int> &path);//+
+    TreeNode* get_deleted_subtree(const std::vector<int> &path); 
 };
 
 

@@ -23,7 +23,7 @@ void TreeNode::add(const int &dat) {
 }
 
 void TreeNode::print() {
-    std::cout << data << ' ' << this;
+    std::cout << data;
     if (!(children.empty())) {
         std::cout << "(";
         for (int i = 0; i < children.size() - 1; ++i) {
@@ -100,7 +100,22 @@ std::vector<int> TreeNode::get_path(const int &dat) {
 }
 
 void TreeNode::add_by_path(const int &dat, const std::vector<int> &path) {
-    
-
+    if(path.empty()) {
+        add(dat);
+    } else {
+        std::vector<int> temp_p = path;
+        TreeNode* temp;
+        std::vector<TreeNode*> temp_ch = children;
+        while (!temp_p.empty()) {
+            temp = temp_ch[temp_p[temp_p.size() - 1]];
+            temp_p.pop_back();
+            if (!temp_p.empty()) { temp_ch = temp->children; }
+        }
+        TreeNode* new_node = new TreeNode;
+        new_node->data = dat;
+        new_node->root = temp;
+        temp->children.push_back(new_node);
+        count++;
+    }
 }
 

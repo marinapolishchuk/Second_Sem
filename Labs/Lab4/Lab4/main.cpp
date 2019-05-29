@@ -19,6 +19,10 @@ int main() {
     for (auto a : t.get_path(5)) {
         std::cout << a << ' ';
     }
+    t.add_by_path(7, {});
+    t.print();
+    std::cout << std::endl;
+    TreeNode* get_deleted_subtree();
 
     return 0;
 }
