@@ -12,13 +12,11 @@ void TreeNode::add(const int &dat) {
     if (this->root == nullptr) {
         this->root = this;
         this->root->data = dat;
-        count++;
     } else {
         TreeNode* new_el = new TreeNode;
         new_el->data = dat;
         new_el->root = this;
         this->children.push_back(new_el);
-        count++;
     }
 }
 
@@ -33,10 +31,6 @@ void TreeNode::print() {
         children.back()->print();
         std::cout << ")";
     }
-}
-
-int TreeNode::size() {
-    return count;
 }
 
 int TreeNode::get_data() {
@@ -115,7 +109,17 @@ void TreeNode::add_by_path(const int &dat, const std::vector<int> &path) {
         new_node->data = dat;
         new_node->root = temp;
         temp->children.push_back(new_node);
-        count++;
     }
+}
+
+TreeNode* TreeNode::get_deleted_subtree(const std::vector<int> &path) {
+    TreeNode* subtree = get_element_by_path(path);
+    for (size_t i = 0; i < subtree->root->children.size(); ++i) {
+        if (children[i] == subtree) {
+            children.erase(children.begin() + i);
+        }
+    }
+    subtree->root = subtree;
+    return subtree;
 }
 

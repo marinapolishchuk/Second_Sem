@@ -22,7 +22,11 @@ int main() {
     t.add_by_path(7, {});
     t.print();
     std::cout << std::endl;
-    TreeNode* get_deleted_subtree();
+    TreeNode* temp = t.get_deleted_subtree({1});
+    temp->print();
+    std::cout << std::endl;
+    t.print();
+    std::cout << std::endl;
 
     return 0;
 }

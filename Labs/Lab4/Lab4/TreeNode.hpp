@@ -16,20 +16,18 @@ private:
     int data;
     TreeNode* root;
     std::vector<TreeNode*> children;
-    int count = 0;
     TreeNode* find_node(const int &dat, bool &found); //+
 public:
     TreeNode() = default;
     ~TreeNode() = default;
     void add(const int &dat); //+
     void print(); //+
-    int size(); //+
     int get_data(); //+
     TreeNode* get_element_by_path(const std::vector<int> &path); //+
     TreeNode* get_node_by_data(const int &dat); //+
     std::vector<int> get_path(const int &el); //+
-    void add_by_path(const int &dat, const std::vector<int> &path);//+
-    TreeNode* get_deleted_subtree(const std::vector<int> &path); 
+    void add_by_path(const int &dat, const std::vector<int> &path); //+
+    TreeNode* get_deleted_subtree(const std::vector<int> &path); //+
 };
 
 
