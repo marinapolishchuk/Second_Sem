@@ -12,18 +12,24 @@
 
 class ExpTree {
 private:
-    char data;
+    std::string data;
     ExpTree* root;
     ExpTree* left;
     ExpTree* right;
-    
+    void print(ExpTree* node);
+    void build_tree(std::vector<std::string> parsed);
+    void get_res(ExpTree* t);
 public:
     ExpTree() = default;
     ~ExpTree() = default;
-    static void calculate(std::string exp);
+    void print();
+    static void calculate(const std::string &exp);
+    static ExpTree* create_empty();
     
 };
 
-std::vector<std::string> parse_exp(std::string exp);
+void remove_spaces(std::string &str); //+
+bool is_correct(const std::string &str); //+
+std::vector<std::string> get_parsed_exp(const std::string &exp); //+
 
 #endif /* ExpressionTree_hpp */

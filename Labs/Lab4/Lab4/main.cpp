@@ -35,10 +35,6 @@ int main() {
 //    t.print();
 //    std::cout << std::endl;
 //    t.print_table();
-//    return 0;
-    std::vector<std::string> p = parse_exp("(199+31)*2");
-    for (auto &a : p) {
-        std::cout << a << ", ";
-    }
-    std::cout << std::endl;
+    ExpTree::calculate("2 + 3");
+    return 0;
 }
