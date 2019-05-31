@@ -2,12 +2,13 @@
 //  main.cpp
 //  Lab4
 //
-//  Created by Marina Polishchuk on 5/29/19.
+//  Created by Марина on 5/29/19.
 //  Copyright © 2019 Marina Polishchuk. All rights reserved.
 //
 
 #include "TreeNode.hpp"
 #include "BTNode.hpp"
+#include "ExpressionTree.hpp"
 
 int main() {
 //    TreeNode t;
@@ -24,5 +25,20 @@ int main() {
 //    t.print();
 //    std::cout << std::endl;
 //
-    return 0;
+    
+    /////
+//    BTNode t;
+//    t.add(10);
+//    t.add(11);
+//    t.add(9);
+//    t.add(7);
+//    t.print();
+//    std::cout << std::endl;
+//    t.print_table();
+//    return 0;
+    std::vector<std::string> p = parse_exp("(199+31)*2");
+    for (auto &a : p) {
+        std::cout << a << ", ";
+    }
+    std::cout << std::endl;
 }

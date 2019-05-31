@@ -98,7 +98,7 @@ void TreeNode::add_by_path(const int &dat, const std::vector<int> &path) {
         add(dat);
     } else {
         std::vector<int> temp_p = path;
-        TreeNode* temp;
+        TreeNode* temp = nullptr;
         std::vector<TreeNode*> temp_ch = children;
         while (!temp_p.empty()) {
             temp = temp_ch[temp_p[temp_p.size() - 1]];
