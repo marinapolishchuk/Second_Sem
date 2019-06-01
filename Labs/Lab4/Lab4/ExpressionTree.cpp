@@ -110,7 +110,13 @@ int ExpTree::eval(ExpTree* node) {
     if(node->data == "+") { return l_val + r_val; }
     if(node->data == "-") { return l_val - r_val; }
     if(node->data == "*") { return l_val * r_val; }
-    if(node->data == "/") { return l_val / r_val; }
+    if(node->data == "/") {
+        if (r_val != 0) { return l_val / r_val; }
+        else {
+            std::cout << "Dividing by zero." << std::endl;
+            return -1;
+        }
+    }
     if(node->data == "^") { return std::pow(l_val, r_val); }
     return 0;
 }
