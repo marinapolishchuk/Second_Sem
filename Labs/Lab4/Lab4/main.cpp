@@ -25,7 +25,7 @@ int main() {
     std::cin >> chose;
     switch (chose) {
         case 1: {
-            std::cout << "Demo mode was chosen." << std::endl;
+            std::cout << "Demonstration mode was chosen." << std::endl;
             std::cout << "\nTREE IMPLEMENTATION: " << std::endl;
             std::cout << "====================" << std::endl;
             std::cout << "get_path()\nget_element_by_path()\nadd_element_by_path\nprint_with_brackets()\nget_deleted_subtree()" << std::endl;
@@ -84,10 +84,60 @@ int main() {
             std::cout << "\nARITHMETICAL EXPRESSION TREE IMPLEMENTATION: " << std::endl;
             std::cout << "====================" << std::endl;
             ExpTree::calculate("(5+(3^2))-15");
-
+            ExpTree::calculate("(8+6)/(6+1)");
             break;
         }
         case 2: {
+            std::cout << "Interactive mode was chosen." << std::endl;
+            std::cout << "What tree would you like to create? \n\t1.Simple tree \n\t2.Binary tree \n\t3.Arithmetical expression tree" << std::endl;
+            int chose = 0;
+            std::cin >> chose;
+            switch (chose) {
+                case 1: {
+                    std::cout << "Simple tree." << std::endl;
+                    int size;
+                    std::cout << "Enter size of tree: ";
+                    std::cin >> size;
+                    int data;
+                    TreeNode t;
+                    std::cout << "Enter data: ";
+                    for (int i = 0; i < size; ++i) {
+                        std::cin >> data;
+                        t.add(data);
+                    }
+                    t.print();
+                    std::cout << std::endl;
+                    break;
+                }
+                case 2: {
+                    std::cout << "Binary tree." << std::endl;
+                    int size;
+                    std::cout << "Enter size of tree: ";
+                    std::cin >> size;
+                    int data;
+                    BTNode t;
+                    std::cout << "Enter data: ";
+                    for (int i = 0; i < size; ++i) {
+                        std::cin >> data;
+                        t.add(data);
+                    }
+                    t.print();
+                    std::cout << std::endl;
+                    break;
+                }
+                case 3: {
+                    std::cout << "Arithmetical expression tree." << std::endl;
+                    std::string exp;
+                    std::cout << "Enter the expression: ";
+                    std::cin >> exp;
+                    ExpTree::calculate(exp);
+                    break;
+                }
+                default: {
+                    std::cout << "Error. An option was chosen incorrectly." << std::endl;
+                    break;
+                }
+            }
             break;
         }
             
@@ -96,32 +146,5 @@ int main() {
             break;
         }
     }
-    
-//    TreeNode t;
-//    t.add(1); t.add(2); t.add(3);
-//    t.get_element_by_path({1})->add(4);
-//    t.print();
-//    std::cout << std::endl;
-//    std::cout << t.get_element_by_path({1, 0})->get_data() << std::endl;
-//    std::cout << t.get_node_by_data(3) << std::endl;
-//    for (auto a : t.get_path(5)) {
-//        std::cout << a << ' ';
-//    }
-//    t.add_by_path(7, {});
-//    t.print();
-//    std::cout << std::endl;
-//
-    
-    /////
-//    BTNode t;
-//    t.add(10);
-//    t.add(11);
-//    t.add(9);
-//    t.add(7);
-//    t.print();
-//    std::cout << std::endl;
-//    t.print_table();
-//    ExpTree::calculate("(2 + 3)/0");
-   
     return 0;
 }
