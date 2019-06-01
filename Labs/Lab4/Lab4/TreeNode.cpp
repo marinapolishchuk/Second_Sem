@@ -70,21 +70,19 @@ TreeNode* TreeNode::get_node_by_data(const int &dat) {
     }
     return nullptr;
 }
-
 std::vector<int> TreeNode::get_path(const int &dat) {
-    std::vector<int> path(0);
+    static std::vector<int> path;
     if (this->data == dat) {
         return path;
     } else {
         TreeNode* node = get_node_by_data(dat);
         if (node != nullptr) {
-            for (size_t i = 0; i < node->root->children.size(); ++i)    {
+            for (int i = 0; i < node->root->children.size(); i++)  {
                 if(node->root->children[i] == node) {
                     path.insert(path.begin(), i);
-                    i = 0;
+                    i = -1;
                     if (node->root != nullptr) {
                         node = node->root;
-                        
                     } else { break; }
                 }
             }
@@ -101,8 +99,8 @@ void TreeNode::add_by_path(const int &dat, const std::vector<int> &path) {
         TreeNode* temp = nullptr;
         std::vector<TreeNode*> temp_ch = children;
         while (!temp_p.empty()) {
-            temp = temp_ch[temp_p[temp_p.size() - 1]];
-            temp_p.pop_back();
+            temp = temp_ch[temp_p[0]];
+            temp_p.erase(temp_p.begin());
             if (!temp_p.empty()) { temp_ch = temp->children; }
         }
         TreeNode* new_node = new TreeNode;
