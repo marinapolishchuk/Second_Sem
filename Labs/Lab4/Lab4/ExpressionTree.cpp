@@ -9,6 +9,7 @@
 
 #include "ExpressionTree.hpp"
 #include <vector>
+#include <cmath>
 #include <iostream>
 
 void ExpTree::print(ExpTree* node) {
@@ -44,6 +45,8 @@ void ExpTree::calculate(const std::string &exp) {
     std::cout << "Expression: " << exp << std::endl;
     std::string temp = exp;
     remove_spaces(temp);
+    temp.insert(0, "(");
+    temp.insert(temp.size(), ")");
     std::vector<std::string> parsed = get_parsed_exp(temp);
     std::cout << "Parsed expression: ";
     for (auto &a : parsed) {
@@ -55,8 +58,10 @@ void ExpTree::calculate(const std::string &exp) {
     std::cout << "Tree:" << std::endl;
     t->print();
     std::cout << std::endl;
-    //double res = get_res(t);
-    //вывод выражения с результатом;
+    int res = t->eval(t);
+    std::cout << "RES: ";
+    std::cout << exp << " = " << res;
+    std::cout << std::endl;
 }
 
 ExpTree* ExpTree::create_empty() {
@@ -67,11 +72,6 @@ ExpTree* ExpTree::create_empty() {
     return new_node;
 }
 
-//Если считан токен ( - добавляем новый узел, как левого потомка текущего, и спускаемся к нему вниз
-//Если считан один из операторов - устанавливаем корневое значение текущего узла равным оператору из этого токена. ДОбавляем новый узел на место правого потомка текущего и спускаемся вниз по правому поддереву.
-//Если считанный токен - число, то устанавливаем корневое значение равным этой величине и возвращаемся к родителю.
-//Если считан токен ), то перемещаемся к  родителю текущего узла.
-//1. Создаем пустое дерево
 void ExpTree::build_tree(std::vector<std::string> parsed) {
     ExpTree* current = this;
     for (auto &a : parsed) {
@@ -82,7 +82,7 @@ void ExpTree::build_tree(std::vector<std::string> parsed) {
             current->left->data = "";
             current = current->left;
         }
-        else if (a == "+" || a == "-" || a == "*" || a == "/" || a == "^" || a == "%") {
+        else if (a == "+" || a == "-" || a == "*" || a == "/" || a == "^") {
             current->right = new ExpTree;
             current->right->root = current;
             current->right->left = current->right->right = nullptr;
@@ -93,24 +93,27 @@ void ExpTree::build_tree(std::vector<std::string> parsed) {
             current = current->root;
         }
         else {
-            if(current == this) {
-                current->left = new ExpTree;
-                current->left->root = current;
-                current->left->left = current->left->right = nullptr;
-                current->left->data = a;
-            } else {
                 current->data = a;
                 current = current->root;
-            }
         }
     }
 }
 
-
-
-
-
-
+int ExpTree::eval(ExpTree* node) {
+    if(node == nullptr) { return 0; }
+    if(node->left == nullptr && node->right == nullptr) {
+        return std::stoi(node->data);
+    }
+    int l_val = eval(node->left);
+    int r_val = eval(node->right);
+    
+    if(node->data == "+") { return l_val + r_val; }
+    if(node->data == "-") { return l_val - r_val; }
+    if(node->data == "*") { return l_val * r_val; }
+    if(node->data == "/") { return l_val / r_val; }
+    if(node->data == "^") { return std::pow(l_val, r_val); }
+    return 0;
+}
 
 void remove_spaces(std::string &str) {
     for (size_t i = 0; i < str.size(); ++i) {

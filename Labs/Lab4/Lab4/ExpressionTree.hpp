@@ -18,7 +18,7 @@ private:
     ExpTree* right;
     void print(ExpTree* node);
     void build_tree(std::vector<std::string> parsed);
-    void get_res(ExpTree* t);
+    int eval(ExpTree* node);
 public:
     ExpTree() = default;
     ~ExpTree() = default;

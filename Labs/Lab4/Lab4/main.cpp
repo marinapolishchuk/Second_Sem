@@ -35,6 +35,7 @@ int main() {
 //    t.print();
 //    std::cout << std::endl;
 //    t.print_table();
-    ExpTree::calculate("2 + 3");
+    ExpTree::calculate("(2 + 3)^4");
+   
     return 0;
 }
