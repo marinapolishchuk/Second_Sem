@@ -8,9 +8,6 @@
 
 
 #include "ExpressionTree.hpp"
-#include <vector>
-#include <cmath>
-#include <iostream>
 
 void ExpTree::print(ExpTree* node) {
     if(node != nullptr) {
@@ -41,7 +38,7 @@ void ExpTree::print() {
 
 void ExpTree::calculate(const std::string &exp) {
     if(exp.empty()) { std::cout << "Expression is empty." << std::endl; return; }
-    if(!is_correct(exp)) { std::cout << "An expression is incorrect. Can't be calculated." << std::endl; return; }
+    if(!is_correct(exp)) { std::cout << "An expression is incorrect. Extra bracket. Can't be calculated." << std::endl; return; }
     std::cout << "Expression: " << exp << std::endl;
     std::string temp = exp;
     remove_spaces(temp);
@@ -58,9 +55,13 @@ void ExpTree::calculate(const std::string &exp) {
     std::cout << "Tree:" << std::endl;
     t->print();
     std::cout << std::endl;
-    int res = t->eval(t);
-    std::cout << "RES: ";
-    std::cout << exp << " = " << res;
+    std::pair<int, std::string> res = t->eval(t);
+    if(res.second == "") {
+        std::cout << "RES: ";
+        std::cout << exp << " = " << res.first;
+    } else {
+        std::cout << res.second;
+    }
     std::cout << std::endl;
 }
 
@@ -99,26 +100,29 @@ void ExpTree::build_tree(std::vector<std::string> parsed) {
     }
 }
 
-int ExpTree::eval(ExpTree* node) {
-    if(node == nullptr) { return 0; }
+std::pair<int, std::string> ExpTree::eval(ExpTree* node) {
+    std::string err = "";
+    if(node == nullptr) { return std::pair<int, std::string>(0, err); }
     if(node->left == nullptr && node->right == nullptr) {
-        return std::stoi(node->data);
+        return std::pair<int, std::string>(std::stoi(node->data), err);
     }
-    int l_val = eval(node->left);
-    int r_val = eval(node->right);
+    auto l_val = eval(node->left);
+    auto r_val = eval(node->right);
+    if (!l_val.second.empty()) { return l_val; }
+    if (!r_val.second.empty()) { return r_val; }
     
-    if(node->data == "+") { return l_val + r_val; }
-    if(node->data == "-") { return l_val - r_val; }
-    if(node->data == "*") { return l_val * r_val; }
+    if(node->data == "+") { return std::pair<int, std::string>(l_val.first + r_val.first, err); }
+    if(node->data == "-") { return std::pair<int, std::string>(l_val.first - r_val.first, err); }
+    if(node->data == "*") { return std::pair<int, std::string>(l_val.first * r_val.first, err); }
     if(node->data == "/") {
-        if (r_val != 0) { return l_val / r_val; }
+        if (r_val.first != 0) { return std::pair<int, std::string>(l_val.first / r_val.first, err); }
         else {
-            std::cout << "Dividing by zero." << std::endl;
-            return -1;
+            err =  "Error. Dividing by zero.";
+            return std::pair<int, std::string>(-1, err);
         }
     }
-    if(node->data == "^") { return std::pow(l_val, r_val); }
-    return 0;
+    if(node->data == "^") { return std::pair<int, std::string>(std::pow(l_val.first, r_val.first), err); }
+    return std::pair<int, std::string>(0, err);
 }
 
 void remove_spaces(std::string &str) {

@@ -8,8 +8,7 @@
 
 #ifndef TreeNode_hpp
 #define TreeNode_hpp
-#include <iostream>
-#include <vector>
+#include "helpers.h"
 
 class TreeNode {
 private:

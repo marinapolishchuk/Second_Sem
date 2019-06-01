@@ -7,8 +7,6 @@
 //
 
 #include "BTNode.hpp"
-#include <iostream>
-#include <iomanip>
 
 void BTNode::add(const int &dat, BTNode* leaf){
     if(dat < leaf->data){

@@ -8,7 +8,7 @@
 
 #ifndef ExpressionTree_hpp
 #define ExpressionTree_hpp
-#include <string>
+#include "helpers.h"
 
 class ExpTree {
 private:
@@ -18,7 +18,7 @@ private:
     ExpTree* right;
     void print(ExpTree* node);
     void build_tree(std::vector<std::string> parsed);
-    int eval(ExpTree* node);
+    std::pair<int, std::string> eval(ExpTree* node);
 public:
     ExpTree() = default;
     ~ExpTree() = default;
