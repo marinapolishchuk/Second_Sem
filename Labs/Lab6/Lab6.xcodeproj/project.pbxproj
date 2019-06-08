@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C1BE5A022A6E27700412E17 /* BSTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C1BE59E22A6E27700412E17 /* BSTree.cpp */; };
 		9CE6333E22A5AED3001FC2C5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6333D22A5AED3001FC2C5 /* main.cpp */; };
 		9CE6334822A5B132001FC2C5 /* LinkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6334622A5B132001FC2C5 /* LinkedList.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C1BE59C22A6964A00412E17 /* ArrayBasedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ArrayBasedList.hpp; sourceTree = "<group>"; };
+		9C1BE59E22A6E27700412E17 /* BSTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BSTree.cpp; sourceTree = "<group>"; };
+		9C1BE59F22A6E27700412E17 /* BSTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BSTree.hpp; sourceTree = "<group>"; };
 		9CE6333A22A5AED3001FC2C5 /* Lab6 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lab6; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CE6333D22A5AED3001FC2C5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9CE6334422A5AEEC001FC2C5 /* headers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
@@ -63,10 +67,13 @@
 			isa = PBXGroup;
 			children = (
 				9CE6333D22A5AED3001FC2C5 /* main.cpp */,
+				9C1BE59C22A6964A00412E17 /* ArrayBasedList.hpp */,
 				9CE6334422A5AEEC001FC2C5 /* headers.h */,
 				9CE6334622A5B132001FC2C5 /* LinkedList.cpp */,
 				9CE6334722A5B132001FC2C5 /* LinkedList.hpp */,
 				9CE6334D22A5B2EB001FC2C5 /* Data.hpp */,
+				9C1BE59E22A6E27700412E17 /* BSTree.cpp */,
+				9C1BE59F22A6E27700412E17 /* BSTree.hpp */,
 			);
 			path = Lab6;
 			sourceTree = "<group>";
@@ -128,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CE6334822A5B132001FC2C5 /* LinkedList.cpp in Sources */,
+				9C1BE5A022A6E27700412E17 /* BSTree.cpp in Sources */,
 				9CE6333E22A5AED3001FC2C5 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
